@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/unrolled/render"
 )
@@ -22,4 +23,10 @@ func NewRenderer() {
 	})
 
 	Renderer = rend
+}
+
+func (r *RendererCtrl) Render(res http.ResponseWriter, status int, v interface{}) {
+	res.Header().Set("Access-Control-Allow-Origin", "*")
+
+	r.r.JSON(res, status, v)
 }

@@ -17,11 +17,11 @@ var (
 func main() {
 	services.NewLogger()
 	services.NewRenderer()
+	services.NewAccess()
 
 	provider.SetRBAC("conf/rbac.conf", "conf/rbac.policy")
 
-	const PORT = "3000"
-	const IP = "localhost"
+	var PORT = "3000"
 
 	server := negroni.Classic()
 	mux := httprouter.New()
@@ -32,6 +32,8 @@ func main() {
 
 	server.UseHandler(mux)
 
-	server.Run(IP + ":" + PORT)
-	graceful.Run(IP+":"+PORT, 10*time.Second, server)
+	mux.GET("/", provider.RenderSomething)
+
+	server.Run(":" + PORT)
+	graceful.Run(":"+PORT, 10*time.Second, server)
 }
