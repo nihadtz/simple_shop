@@ -35,3 +35,14 @@ func LogError(details string, err error) {
 
 	Logger.WithField("file", file).WithField("line", line).Errorln(details, err.Error())
 }
+
+// LogInfo ->
+func LogInfo(details string) {
+	fmt.Println(details)
+
+	_, filePath, line, _ := runtime.Caller(1)
+
+	_, file := filepath.Split(filePath)
+
+	Logger.WithField("file", file).WithField("line", line).Infoln(details)
+}

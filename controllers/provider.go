@@ -3,7 +3,6 @@ package controllers
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -14,7 +13,6 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	jwtreq "github.com/dgrijalva/jwt-go/request"
 	"github.com/gorilla/context"
-	"github.com/julienschmidt/httprouter"
 	"github.com/nihadtz/simple_shop/models"
 	"github.com/nihadtz/simple_shop/services"
 )
@@ -32,7 +30,7 @@ var (
 func (m Provider) JWT(res http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
 	uri := strings.Split(req.RequestURI, ".")
 	routes := strings.Split(uri[0], "/")
-	//fullAction := uri[0]
+	fullAction := uri[0]
 
 	action := "/"
 
@@ -40,9 +38,7 @@ func (m Provider) JWT(res http.ResponseWriter, req *http.Request, next http.Hand
 		action += strings.Split(uri[0], "/")[1]
 	}
 
-	fmt.Println(action)
-
-	if action == "/register" {
+	if action == "/register" || action == "/products" {
 		//Publicly open
 	} else if action == "/logout" {
 		user, err := checkToken(req)
@@ -90,10 +86,26 @@ func (m Provider) JWT(res http.ResponseWriter, req *http.Request, next http.Hand
 			return
 		}
 
+		if m.rules != nil && m.rules.Enforce(user.Type, fullAction, requestMethod2Mode(req.Method)) {
+			services.LogInfo("RBAC allowed by type " + user.Type + " and email " + user.Email + " for action " + fullAction)
+		} else {
+			services.LogInfo("RBAC not allowed for email " + user.Email + " and type " + user.Type + " for action " + fullAction)
+			services.Renderer.Error(res, http.StatusForbidden, "Access forbidden")
+			return
+		}
+
 		context.Set(req, "user", user)
 	}
 
 	next(res, req)
+}
+
+func requestMethod2Mode(reqMethod string) string {
+	if reqMethod == "POST" || reqMethod == "PUT" || reqMethod == "DELETE" || reqMethod == "PATCH" {
+		return "write"
+	}
+
+	return "read"
 }
 
 func issueToken(auth map[string]interface{}, req *http.Request) (models.User, error) {
@@ -205,9 +217,4 @@ func (m *Provider) SetRBAC(model, policy string) error {
 	m.rules, err = casbin.NewEnforcerSafe(path+model, path+policy, false)
 
 	return err
-}
-
-func (m Provider) RenderSomething(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
-
-	services.Renderer.Render(res, http.StatusOK, map[string]interface{}{"api": "Hello world"})
 }

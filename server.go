@@ -13,6 +13,7 @@ import (
 var (
 	provider controllers.Provider
 	users    controllers.Users
+	products controllers.Products
 )
 
 func main() {
@@ -20,7 +21,7 @@ func main() {
 	services.NewRenderer()
 	services.NewAccess()
 
-	provider.SetRBAC("conf/rbac.conf", "conf/rbac.policy")
+	provider.SetRBAC("/conf/rbac.conf", "/conf/rbac.policy")
 
 	var PORT = "3000"
 
@@ -41,7 +42,10 @@ func main() {
 	mux.POST("/login", users.Login)
 	mux.GET("/logout", users.Logout)
 
-	mux.GET("/", provider.RenderSomething)
+	mux.POST("/product", products.Create)
+	mux.PUT("/product", products.Update)
+	mux.GET("/product/:id", products.Get)
+	mux.GET("/products", products.List)
 
 	server.Run(":" + PORT)
 	graceful.Run(":"+PORT, 10*time.Second, server)
