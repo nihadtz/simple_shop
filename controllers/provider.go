@@ -38,7 +38,7 @@ func (m Provider) JWT(res http.ResponseWriter, req *http.Request, next http.Hand
 		action += strings.Split(uri[0], "/")[1]
 	}
 
-	if action == "/register" || action == "/products" {
+	if action == "/register" || action == "/products" || fullAction == "/dashboard/public" {
 		//Publicly open
 	} else if action == "/logout" {
 		user, err := checkToken(req)

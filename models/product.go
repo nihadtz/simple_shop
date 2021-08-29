@@ -108,3 +108,47 @@ func ListProducts() ([]Product, error) {
 
 	return products, err
 }
+
+func PopularProducts() ([]Product, error) {
+	db := services.Access.GetDB()
+	var products []Product
+
+	query := `SELECT 
+				p.id, p.name, p.description, p.category, p.price
+			FROM
+				Product p
+			INNER JOIN 
+				Purchase ps 
+				ON ps.product_id = p.id
+			GROUP by p.id
+			ORDER BY SUM(IFNULL(ps.quantity,0)) desc
+			LIMIT 5`
+
+	rows, err := db.Queryx(query)
+
+	if err != nil {
+		services.LogError("Error listing popular Products", err)
+		return products, err
+	}
+
+	if rows == nil {
+		return products, nil
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var product Product
+
+		err = rows.StructScan(&product)
+
+		if err != nil {
+			services.LogError("Error scaning Product", err)
+			return products, err
+		}
+
+		products = append(products, product)
+	}
+
+	return products, err
+}

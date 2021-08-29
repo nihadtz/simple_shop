@@ -7,6 +7,7 @@ p, common, /payment/stripe/*, write
 p, admin, /user*, read
 p, admin, /user*, write
 p, admin, /product, write
+p, admin, /dashboard/admin, read
 
 g, admin, common
 g, customer, common

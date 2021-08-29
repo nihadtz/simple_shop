@@ -11,11 +11,12 @@ import (
 )
 
 var (
-	provider  controllers.Provider
-	users     controllers.Users
-	products  controllers.Products
-	purchases controllers.Purchases
-	payments  controllers.Payments
+	provider   controllers.Provider
+	users      controllers.Users
+	products   controllers.Products
+	purchases  controllers.Purchases
+	payments   controllers.Payments
+	dashboards controllers.Dashboards
 )
 
 func main() {
@@ -54,6 +55,9 @@ func main() {
 	mux.GET("/purchases", purchases.List)
 
 	mux.POST("/payment/stripe/:id", payments.ViaStripe)
+
+	mux.GET("/dashboard/admin", dashboards.ListAdminDashboard)
+	mux.GET("/dashboard/public", dashboards.ListPublicDashboard)
 
 	server.Run(":" + PORT)
 	graceful.Run(":"+PORT, 10*time.Second, server)
