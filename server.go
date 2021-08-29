@@ -15,6 +15,7 @@ var (
 	users     controllers.Users
 	products  controllers.Products
 	purchases controllers.Purchases
+	payments  controllers.Payments
 )
 
 func main() {
@@ -51,6 +52,8 @@ func main() {
 	mux.POST("/purchase", purchases.Create)
 	mux.GET("/purchase/:id", purchases.Get)
 	mux.GET("/purchases", purchases.List)
+
+	mux.POST("/payment/stripe/:id", payments.ViaStripe)
 
 	server.Run(":" + PORT)
 	graceful.Run(":"+PORT, 10*time.Second, server)

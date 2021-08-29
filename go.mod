@@ -15,6 +15,7 @@ require (
 	github.com/julienschmidt/httprouter v1.3.0 // indirect
 	github.com/lib/pq v1.10.2 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
+	github.com/stripe/stripe-go/v72 v72.62.0 // indirect
 	github.com/tylerb/graceful v1.2.15 // indirect
 	github.com/unrolled/render v1.4.0 // indirect
 	github.com/urfave/negroni v1.0.0 // indirect

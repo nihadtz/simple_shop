@@ -2,6 +2,7 @@ p, common, /product*, read
 p, common, /user/*, read
 p, common, /purchase, write
 p, common, /purchase*, read
+p, common, /payment/stripe/*, write
 
 p, admin, /user*, read
 p, admin, /user*, write

@@ -1,15 +1,18 @@
 package models
 
-import "github.com/nihadtz/simple_shop/services"
+import (
+	"github.com/nihadtz/simple_shop/services"
+)
 
 type Purchase struct {
-	ID        int     `db:"id" json:"id"`
-	Date      int64   `db:"date" json:"date"`
-	ProductID int     `db:"product_id" json:"product_id"`
-	UserID    int     `db:"user_id" json:"user_id"`
-	Quantity  int     `db:"quantity" json:"quantity"`
-	Status    string  `db:"status" json:"status"`
-	Total     float64 `db:"total" json:"total"`
+	ID        int       `db:"id" json:"id"`
+	Date      int64     `db:"date" json:"date"`
+	ProductID int       `db:"product_id" json:"product_id"`
+	UserID    int       `db:"user_id" json:"user_id"`
+	Quantity  int       `db:"quantity" json:"quantity"`
+	Status    string    `db:"status" json:"status"`
+	Total     float64   `db:"total" json:"total"`
+	Payments  []Payment `db:"-" json:"payments"`
 }
 
 var createPurchase = `CREATE TABLE Purchase (
@@ -104,8 +107,32 @@ func ListPurchases(filter PurchaseFilter) ([]Purchase, error) {
 			return purchases, err
 		}
 
+		err = purchase.ListPurchasePayments()
+
+		if err != nil {
+			services.LogError("Error listing Purchase Payments", err)
+			return purchases, err
+		}
+
 		purchases = append(purchases, purchase)
 	}
 
 	return purchases, err
+}
+
+func (p *Purchase) UpdateStatus() error {
+	db := services.Access.GetDB()
+
+	query := `UPDATE Purchase SET
+				status=?
+			WHERE 
+				id=?`
+
+	_, err := db.Exec(query, p.Status, p.ID)
+
+	if err != nil {
+		services.LogError("Error updating Purchase status", err)
+	}
+
+	return err
 }
