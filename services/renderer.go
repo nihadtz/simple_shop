@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/unrolled/render"
 )
@@ -25,8 +26,17 @@ func NewRenderer() {
 	Renderer = rend
 }
 
-func (r *RendererCtrl) Render(res http.ResponseWriter, status int, v interface{}) {
+func (rend *RendererCtrl) Render(res http.ResponseWriter, status int, v interface{}) {
 	res.Header().Set("Access-Control-Allow-Origin", "*")
 
-	r.r.JSON(res, status, v)
+	rend.r.JSON(res, status, v)
+}
+
+func (rend *RendererCtrl) Error(res http.ResponseWriter, status int, err string) {
+
+	if err != "" {
+		rend.Render(res, status, map[string]string{"status": strconv.Itoa(status), "error": err})
+	} else {
+		rend.Render(res, status, nil)
+	}
 }

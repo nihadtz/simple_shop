@@ -16,5 +16,6 @@ require (
 	github.com/tylerb/graceful v1.2.15 // indirect
 	github.com/unrolled/render v1.4.0 // indirect
 	github.com/urfave/negroni v1.0.0 // indirect
-	golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea // indirect
+	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
+	golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1 // indirect
 )

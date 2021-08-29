@@ -42,3 +42,7 @@ func NewAccess() {
 func (a AccessCtrl) getDNS() string {
 	return sqlUser + ":" + sqlPassword + "@" + sqlProtocol + "(" + sqlAddress + ":" + sqlPort + ")" + "/" + dbName
 }
+
+func (a AccessCtrl) GetDB() *sqlx.DB {
+	return a.ShopSQLDB
+}

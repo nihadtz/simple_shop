@@ -12,6 +12,7 @@ import (
 
 var (
 	provider controllers.Provider
+	users    controllers.Users
 )
 
 func main() {
@@ -31,6 +32,9 @@ func main() {
 	server.Use(recovery)
 
 	server.UseHandler(mux)
+
+	mux.POST("/register", users.Create)
+	mux.GET("/user/:id", users.Get)
 
 	mux.GET("/", provider.RenderSomething)
 
