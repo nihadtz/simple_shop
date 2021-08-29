@@ -11,9 +11,10 @@ import (
 )
 
 var (
-	provider controllers.Provider
-	users    controllers.Users
-	products controllers.Products
+	provider  controllers.Provider
+	users     controllers.Users
+	products  controllers.Products
+	purchases controllers.Purchases
 )
 
 func main() {
@@ -46,6 +47,10 @@ func main() {
 	mux.PUT("/product", products.Update)
 	mux.GET("/product/:id", products.Get)
 	mux.GET("/products", products.List)
+
+	mux.POST("/purchase", purchases.Create)
+	mux.GET("/purchase/:id", purchases.Get)
+	mux.GET("/purchases", purchases.List)
 
 	server.Run(":" + PORT)
 	graceful.Run(":"+PORT, 10*time.Second, server)
