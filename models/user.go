@@ -1,6 +1,8 @@
 package models
 
 import (
+	"errors"
+
 	"github.com/nihadtz/simple_shop/services"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -43,6 +45,40 @@ func (u *User) Get(id int) error {
 	err := db.Get(u, query, id)
 
 	return err
+}
+
+func (u *User) GetByEmail(email string) error {
+	db := services.Access.GetDB()
+
+	query := `SELECT 
+				id, name, email, password, type, token, alg, issued
+			FROM
+			 	User
+			WHERE
+				email = ?`
+
+	err := db.Get(u, query, email)
+
+	return err
+}
+
+func (u *User) GetByEmailPassword(email, password string) error {
+	err := u.GetByEmail(email)
+
+	if err != nil {
+		err = errors.New("This User doesn't exists")
+		services.LogError("Error no account with specified email", err)
+		return err
+	}
+
+	err = bcrypt.CompareHashAndPassword(u.PasswordHash, []byte(password))
+
+	if err != nil {
+		services.LogError("Error Matcing password", err)
+		return err
+	}
+
+	return nil
 }
 
 func (u *User) Create() (err error) {

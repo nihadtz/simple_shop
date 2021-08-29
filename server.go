@@ -29,12 +29,16 @@ func main() {
 
 	recovery := negroni.NewRecovery()
 	recovery.PrintStack = false
+
 	server.Use(recovery)
+	server.Use(negroni.HandlerFunc(provider.JWT))
 
 	server.UseHandler(mux)
 
 	mux.POST("/register", users.Create)
 	mux.GET("/user/:id", users.Get)
+
+	mux.POST("/login", users.Login)
 
 	mux.GET("/", provider.RenderSomething)
 
