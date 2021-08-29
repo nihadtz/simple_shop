@@ -1,4 +1,4 @@
-FROM golang:1.17-apline
+FROM golang:latest
 
 WORKDIR /api
 
