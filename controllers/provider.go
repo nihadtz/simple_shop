@@ -44,13 +44,24 @@ func (m Provider) JWT(res http.ResponseWriter, req *http.Request, next http.Hand
 
 	if action == "/register" {
 		//Publicly open
+	} else if action == "/logout" {
+		user, err := checkToken(req)
+
+		if err != nil {
+			services.LogError("Error checking token", err)
+			services.Renderer.Error(res, http.StatusUnauthorized, "Unauthorized")
+			return
+		}
+
+		context.Set(req, "user", user)
+
 	} else if action == "/login" {
 		var auth map[string]interface{}
 
 		err := parseRequestData(req, &auth)
 
 		if err != nil {
-			services.LogError("Error parsin request data", err)
+			services.LogError("Error parsing request data", err)
 			services.Renderer.Error(res, http.StatusUnauthorized, "Unauthorized")
 			return
 		}
@@ -120,6 +131,12 @@ func issueToken(auth map[string]interface{}, req *http.Request) (models.User, er
 
 	user.Algorithm = jwt.SigningMethodHS256.Name
 	user.Password = ""
+
+	err = user.UpdateTokenInfo()
+
+	if err != nil {
+		return user, err
+	}
 
 	return user, nil
 }

@@ -39,6 +39,7 @@ func main() {
 	mux.GET("/user/:id", users.Get)
 
 	mux.POST("/login", users.Login)
+	mux.GET("/logout", users.Logout)
 
 	mux.GET("/", provider.RenderSomething)
 

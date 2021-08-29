@@ -99,3 +99,34 @@ func (u *User) Create() (err error) {
 
 	return err
 }
+
+func (u User) UpdateTokenInfo() error {
+	db := services.Access.GetDB()
+
+	query := `UPDATE User SET
+				token=?, alg=?, issued=?
+			WHERE 
+				id=?`
+
+	_, err := db.Exec(query, u.Token, u.Algorithm, u.Issued, u.ID)
+
+	if err != nil {
+		services.LogError("Error updating Token", err)
+	}
+
+	return err
+}
+
+func (u *User) ClearToken() error {
+	u.Token = ""
+	u.Algorithm = ""
+	u.Issued = 0
+
+	err := u.UpdateTokenInfo()
+
+	if err != nil {
+		services.LogError("Error clearing Token", err)
+	}
+
+	return err
+}
