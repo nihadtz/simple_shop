@@ -10,4 +10,4 @@ RUN go mod download
 
 COPY . .
 
-ENTRYPOINT go run server.go --runas ${RUNAS} --migrate
+ENTRYPOINT go run server.go --runas ${RUNAS} ${MIGRATE}

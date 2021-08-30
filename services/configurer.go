@@ -18,11 +18,6 @@ type LogsConf struct {
 
 // DBConf ->
 type DBConf struct {
-	DBName          string        `yaml:"db_name"`
-	User            string        `yaml:"user"`
-	Password        string        `yaml:"password"`
-	Address         string        `yaml:"address"`
-	Port            int           `yaml:"port"`
 	MaxIdleConns    int           `yaml:"max_idle_conns"`
 	MaxOpenConns    int           `yaml:"max_open_conns"`
 	ConnMaxLifetime time.Duration `yaml:"conn_max_lifetime"`

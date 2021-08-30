@@ -7,6 +7,7 @@ services:
       dockerfile: ./docker/api.dockerfile
       args:
         RUNAS: ${RUNAS}
+        MIGRATE: ${MIGRATE}
     env_file: 
       - .env
     ports:
@@ -25,11 +26,11 @@ services:
   database:
     image: mysql:5.7
     environment:
-      - MYSQL_ROOT_PASSWORD=test
-      - MYSQL_USER=api
-      - MYSQL_PASSWORD=test
-      - MYSQL_DATABASE=shop
-      - MYSQL_ROOT_HOST=%
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
     container_name: mysql-db
     networks:
      - my_network

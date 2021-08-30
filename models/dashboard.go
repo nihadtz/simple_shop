@@ -15,11 +15,11 @@ type DashboardProducts struct {
 }
 
 //Returns items with following data:
-//SoldQuantity is total quantity sold in all Purcases
+//SoldQuantity is total quantity sold in all Purchases
 //Income is total value of all Purchases
 //Paid is amount successfully paid by Customers
-//NotPaid is diference between Income and Paid
-//FailedPayments is amount failed during pyment process
+//NotPaid is difference between Income and Paid
+//FailedPayments is amount failed during payment process
 func ListAdminDashboard() ([]DashboardProducts, error) {
 	db := services.Access.GetDB()
 	var products []DashboardProducts

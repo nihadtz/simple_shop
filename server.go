@@ -34,7 +34,7 @@ func main() {
 	services.NewRenderer()
 
 	if *migrate {
-		services.MigrateDB()
+		services.MigrateDB(*runas)
 	}
 
 	services.NewAccess(*runas)

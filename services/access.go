@@ -3,7 +3,7 @@ package services
 import (
 	"database/sql"
 	"fmt"
-	"strconv"
+	"os"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -17,12 +17,12 @@ var (
 	Access      *AccessCtrl
 	sqlDriver   = "mysql"
 	sqlProtocol = "tcp"
-	sqlPort     = "3306"
+	sqlPort     = os.Getenv("MYSQL_PORT")
 
-	sqlUser     = "api"
-	sqlPassword = "test"
-	sqlAddress  = "mysql-db"
-	dbName      = "shop"
+	sqlUser     = os.Getenv("MYSQL_USER")
+	sqlPassword = os.Getenv("MYSQL_PASSWORD")
+	sqlAddress  = os.Getenv("MYSQL_ADDRESS")
+	dbName      = os.Getenv("MYSQL_DATABASE")
 )
 
 type AccessCtrl struct {
@@ -34,12 +34,6 @@ func NewAccess(runas string) {
 
 	var err error
 	var connString string
-
-	sqlPort = strconv.Itoa(Configuration.DB.Port)
-	sqlUser = Configuration.DB.User
-	sqlPassword = Configuration.DB.Password
-	sqlAddress = Configuration.DB.Address
-	dbName = Configuration.DB.DBName
 
 	if runas == "prod" {
 		sqlProtocol = "unix"
@@ -76,28 +70,38 @@ func (a AccessCtrl) GetDB() *sqlx.DB {
 	return a.ShopSQLDB
 }
 
-func MigrateDB() {
+func MigrateDB(runas string) {
 	a := new(AccessCtrl)
+	var db *sql.DB
+	var err error
 
-	fmt.Println(("mig"))
+	if runas == "prod" {
+		sqlProtocol = "unix"
 
-	db, err := sql.Open("mysql", a.getDNS()+"?multiStatements=true")
+		db, err = sql.Open("mysql", a.getDNSProd()+"&multiStatements=true")
 
-	if err != nil {
-		LogError("Migration Error connecting to database", err)
-		return
+		if err != nil {
+			fmt.Println(err.Error())
+			LogError("Migration Error connecting to database", err)
+			return
+		}
+	} else {
+		db, err = sql.Open("mysql", a.getDNS()+"?multiStatements=true")
+
+		if err != nil {
+			fmt.Println(err.Error())
+			LogError("Migration Error connecting to database", err)
+			return
+		}
 	}
-
-	fmt.Println(("mig"))
 
 	driver, err := mysql.WithInstance(db, &mysql.Config{})
 
 	if err != nil {
+		fmt.Println(err.Error())
 		LogError("Migration Error getting database driver", err)
 		return
 	}
-
-	fmt.Println(("mig"))
 
 	migration, err := migrate.NewWithDatabaseInstance(
 		"file://migrations",
@@ -107,11 +111,10 @@ func MigrateDB() {
 
 	if err != nil {
 		fmt.Println(err.Error())
+		fmt.Println(err.Error())
 		LogError("Error creating migration instance", err)
 		return
 	}
-
-	fmt.Println(("mig"))
 
 	migration.Steps(Configuration.DB.MigrationStep)
 }

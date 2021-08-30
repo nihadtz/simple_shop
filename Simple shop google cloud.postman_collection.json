@@ -1,0 +1,497 @@
+{
+	"info": {
+		"_postman_id": "0bb90427-3d8b-4aca-af26-1a9262b705e5",
+		"name": "Simple shop google cloud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Nihad Pasalic\",\n    \"email\":\"nihad.pasalic2@gmail.com\",\n    \"password\":\"nihad123456\"\n}"
+						},
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/register",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"nihad.pasalic2@gmail.com\",\n    \"password\": \"nihad123456\"\n}"
+						},
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/login",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"nihad.pasalic@gmail.com\",\n    \"password\": \"nihad123456\"\n}"
+						},
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/login",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/logout",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/user/1",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5paGFkLnBhc2FsaWNAZ21haWwuY29tIiwiZXhwaXJ5IjoxNjMwNTYzNzIxfQ.JIPsoJnGwdbETN0ueGFGl1FuYO3LFw53ODLXJAyT4Kk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Product 3\",\n    \"description\":\"Product description\",\n    \"category\":\"Category 1\",\n    \"price\": 7.77\n}"
+						},
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/product",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5paGFkLnBhc2FsaWNAZ21haWwuY29tIiwiZXhwaXJ5IjoxNjMwNTYzNzIxfQ.JIPsoJnGwdbETN0ueGFGl1FuYO3LFw53ODLXJAyT4Kk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/products",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5paGFkLnBhc2FsaWNAZ21haWwuY29tIiwiZXhwaXJ5IjoxNjMwNTYzNzIxfQ.JIPsoJnGwdbETN0ueGFGl1FuYO3LFw53ODLXJAyT4Kk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/product/1",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5paGFkLnBhc2FsaWNAZ21haWwuY29tIiwiZXhwaXJ5IjoxNjMwNTYzNzIxfQ.JIPsoJnGwdbETN0ueGFGl1FuYO3LFw53ODLXJAyT4Kk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 2,\n    \"name\": \"Product 2222\",\n    \"description\": \"Product description\",\n    \"category\": \"Category 1\",\n    \"price\": 2.55\n}"
+						},
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/product",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Purchases",
+			"item": [
+				{
+					"name": "Purchase",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5paGFkLnBhc2FsaWNAZ21haWwuY29tIiwiZXhwaXJ5IjoxNjMwNTYzNzIxfQ.JIPsoJnGwdbETN0ueGFGl1FuYO3LFw53ODLXJAyT4Kk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\": 1,\n    \"quantity\": 3\n}"
+						},
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/purchase",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"purchase"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Purchases",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5paGFkLnBhc2FsaWNAZ21haWwuY29tIiwiZXhwaXJ5IjoxNjMwNTYzNzIxfQ.JIPsoJnGwdbETN0ueGFGl1FuYO3LFw53ODLXJAyT4Kk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/purchases",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"purchases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Purchase",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5paGFkLnBhc2FsaWNAZ21haWwuY29tIiwiZXhwaXJ5IjoxNjMwNTYzNzIxfQ.JIPsoJnGwdbETN0ueGFGl1FuYO3LFw53ODLXJAyT4Kk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/purchase/1",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"purchase",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payments",
+			"item": [
+				{
+					"name": "Pay via Stripe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5paGFkLnBhc2FsaWNAZ21haWwuY29tIiwiZXhwaXJ5IjoxNjMwNTYzNzIxfQ.JIPsoJnGwdbETN0ueGFGl1FuYO3LFw53ODLXJAyT4Kk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/payment/stripe/1",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"payment",
+								"stripe",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/dashboard/admin",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"dashboard",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Public",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://simple-shop-web-mfvmuxdvpq-ey.a.run.app/dashboard/public",
+							"protocol": "https",
+							"host": [
+								"simple-shop-web-mfvmuxdvpq-ey",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"dashboard",
+								"public"
+							]
+						},
+						"description": "Providing list of products and most popular 5 products"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "Token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5paGFkLnBhc2FsaWNAZ21haWwuY29tIiwiZXhwaXJ5IjoxNjMwNTQ4ODI3fQ.qqVe64T0UWssJVOG_qlZWIJfslR16EMLch471vALfX0"
+		}
+	]
+}
