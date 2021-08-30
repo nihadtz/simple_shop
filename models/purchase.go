@@ -24,7 +24,7 @@ var createPurchase = `CREATE TABLE Purchase (
 	status ENUM('new','paid') NOT NULL DEFAULT 'new',
     total DECIMAL(9,2) NOT NULL DEFAULT '0.00',
     PRIMARY KEY(id),
-	FOREIGN KEY (product_id) REFERENCES Product(id)
+	FOREIGN KEY (product_id) REFERENCES Product(id),
 	FOREIGN KEY (user_id) REFERENCES User(id)
     ) ENGINE=INNODB`
 

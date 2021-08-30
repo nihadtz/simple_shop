@@ -5,6 +5,10 @@ services:
     build:
       context: .
       dockerfile: ./docker/api.dockerfile
+      args:
+        RUNAS: ${RUNAS}
+    env_file: 
+      - .env
     ports:
       - 3010:3000
     volumes:

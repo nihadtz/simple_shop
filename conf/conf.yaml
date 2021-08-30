@@ -1,0 +1,40 @@
+---
+common: &defaults
+  port: "3000"
+  ip: "0.0.0.0"
+  logs:
+    debug: "logs/logs.log" 
+dev:
+  <<: *defaults
+  stripe_sk: "sk_test_51JTmjhKF1icERfjOjVyT4i8h1AdhSp0y5lKgnH36eyRcERqgLEcqmFyNXvLAKkzsYFjYate4v8Ucl9aAJYDIcjpB00DHXXa0ur"
+  db:
+    user: "api"
+    password: "test"
+    db_name: "shop"
+    port: 3306
+    address: "mysql-db"
+    max_open_conns: 20
+    max_idle_conns: 10
+    conn_max_lifetime: 2
+test:
+  <<: *defaults
+  db:
+    tuser: "api"
+    password: "test"
+    db_name: "shop"
+    port: 3306
+    address: "mysql-db" 
+    max_open_conns: 20
+    max_idle_conns: 10
+    conn_max_lifetime: 2
+prod:
+  <<: *defaults
+  db:
+    user: "api"
+    password: "j825i9OOuN9N7par"
+    db_name: "shop"
+    port: 3306
+    address: "/cloudsql/simple-shop-324416:europe-west3:mysql-57"
+    max_open_conns: 40
+    max_idle_conns: 20
+    conn_max_lifetime: 5

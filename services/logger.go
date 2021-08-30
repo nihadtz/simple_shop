@@ -17,8 +17,9 @@ func NewLogger() {
 	fmt.Println("Initializing Logger")
 
 	var log = logrus.New()
+	var file *os.File
 
-	file, err := os.OpenFile("logs/logs.log", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0777)
+	file, err := os.OpenFile(Configuration.Logs.Debug, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0777)
 
 	if err != nil {
 		fmt.Println("Error getting log file", err.Error())

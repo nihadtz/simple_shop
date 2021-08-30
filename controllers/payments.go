@@ -17,8 +17,6 @@ import (
 type Payments struct {
 }
 
-var stripeSK = "sk_test_51JTmjhKF1icERfjOjVyT4i8h1AdhSp0y5lKgnH36eyRcERqgLEcqmFyNXvLAKkzsYFjYate4v8Ucl9aAJYDIcjpB00DHXXa0ur"
-
 func (pc Payments) ViaStripe(res http.ResponseWriter, req *http.Request, params httprouter.Params) {
 	user := context.Get(req, "user").(models.User)
 	purchaseID, _ := strconv.Atoi(params.ByName("id"))
@@ -46,10 +44,10 @@ func (pc Payments) ViaStripe(res http.ResponseWriter, req *http.Request, params 
 		return
 	}
 
-	stripe.Key = stripeSK
+	stripe.Key = services.Configuration.StripeSK
 
 	stripeCharge, err := charge.New(&stripe.ChargeParams{
-		Amount:       stripe.Int64(int64(purchase.Total * 100)),
+		Amount:       stripe.Int64(int64(purchase.Total) * 100),
 		Currency:     stripe.String(string(stripe.CurrencyUSD)),
 		Source:       &stripe.SourceParams{Token: stripe.String("tok_visa")}, // this will be sent from frontend, used like this for testing purpose
 		ReceiptEmail: stripe.String(user.Email),

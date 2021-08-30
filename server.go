@@ -3,6 +3,7 @@ package main
 import (
 	"time"
 
+	"github.com/alecthomas/kingpin"
 	"github.com/julienschmidt/httprouter"
 	"github.com/nihadtz/simple_shop/controllers"
 	"github.com/nihadtz/simple_shop/services"
@@ -17,16 +18,21 @@ var (
 	purchases  controllers.Purchases
 	payments   controllers.Payments
 	dashboards controllers.Dashboards
+
+	runas = kingpin.Flag("runas", "Define deployment type and which configuration profile to read (dev, test, prod...)").Short('r').Default("dev").String()
 )
 
+func init() {
+	kingpin.Parse()
+}
+
 func main() {
+
+	services.NewConfigurer(*runas, "conf/conf.yaml")
 	services.NewLogger()
 	services.NewRenderer()
-	services.NewAccess()
-
-	provider.SetRBAC("/conf/rbac.conf", "/conf/rbac.policy")
-
-	var PORT = "3000"
+	services.NewAccess(*runas)
+	services.SetRBAC("/conf/rbac.conf", "/conf/rbac.policy")
 
 	server := negroni.Classic()
 	mux := httprouter.New()
@@ -59,6 +65,6 @@ func main() {
 	mux.GET("/dashboard/admin", dashboards.ListAdminDashboard)
 	mux.GET("/dashboard/public", dashboards.ListPublicDashboard)
 
-	server.Run(":" + PORT)
-	graceful.Run(":"+PORT, 10*time.Second, server)
+	server.Run(":" + services.Configuration.Port)
+	graceful.Run(":"+services.Configuration.Port, 10*time.Second, server)
 }

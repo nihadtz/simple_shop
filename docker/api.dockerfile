@@ -1,4 +1,4 @@
-FROM golang:latest
+FROM golang:1.17-alpine
 
 WORKDIR /api
 
@@ -10,4 +10,4 @@ RUN go mod download
 
 COPY . .
 
-ENTRYPOINT go run server.go
+ENTRYPOINT go run server.go --runas ${RUNAS}

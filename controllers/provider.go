@@ -5,7 +5,6 @@ import (
 	"errors"
 	"io"
 	"net/http"
-	"os"
 	"strings"
 	"time"
 
@@ -86,7 +85,7 @@ func (m Provider) JWT(res http.ResponseWriter, req *http.Request, next http.Hand
 			return
 		}
 
-		if m.rules != nil && m.rules.Enforce(user.Type, fullAction, requestMethod2Mode(req.Method)) {
+		if services.RBACrules != nil && services.RBACrules.Enforce(user.Type, fullAction, requestMethod2Mode(req.Method)) {
 			services.LogInfo("RBAC allowed by type " + user.Type + " and email " + user.Email + " for action " + fullAction)
 		} else {
 			services.LogInfo("RBAC not allowed for email " + user.Email + " and type " + user.Type + " for action " + fullAction)
@@ -112,7 +111,7 @@ func issueToken(auth map[string]interface{}, req *http.Request) (models.User, er
 	user := models.User{}
 
 	if auth["email"] == nil || auth["password"] == nil {
-		err := errors.New("Email or Passwrod not provided")
+		err := errors.New("email or passwrod not provided")
 
 		return user, err
 	}
@@ -203,18 +202,6 @@ func parseRequestData(req *http.Request, v interface{}) error {
 	}
 
 	err = json.Unmarshal(data, &v)
-
-	return err
-}
-
-func (m *Provider) SetRBAC(model, policy string) error {
-	path, err := os.Getwd()
-
-	if err != nil {
-		return err
-	}
-
-	m.rules, err = casbin.NewEnforcerSafe(path+model, path+policy, false)
 
 	return err
 }
