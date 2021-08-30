@@ -26,6 +26,7 @@ type DBConf struct {
 	MaxIdleConns    int           `yaml:"max_idle_conns"`
 	MaxOpenConns    int           `yaml:"max_open_conns"`
 	ConnMaxLifetime time.Duration `yaml:"conn_max_lifetime"`
+	MigrationStep   int           `yaml:"migration_step"`
 }
 
 // Config ->

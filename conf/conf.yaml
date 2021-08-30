@@ -1,7 +1,7 @@
 ---
 common: &defaults
   port: "3000"
-  ip: "0.0.0.0"
+  ip: "localhost"
   logs:
     debug: "logs/logs.log" 
 dev:
@@ -16,6 +16,7 @@ dev:
     max_open_conns: 20
     max_idle_conns: 10
     conn_max_lifetime: 2
+    migration_step: 3
 test:
   <<: *defaults
   db:
@@ -27,6 +28,7 @@ test:
     max_open_conns: 20
     max_idle_conns: 10
     conn_max_lifetime: 2
+    migration_step: 1
 prod:
   <<: *defaults
   db:
@@ -38,3 +40,4 @@ prod:
     max_open_conns: 40
     max_idle_conns: 20
     conn_max_lifetime: 5
+    migration_step: 3

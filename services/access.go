@@ -1,11 +1,15 @@
 package services
 
 import (
+	"database/sql"
 	"fmt"
 	"strconv"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/golang-migrate/migrate"
+	"github.com/golang-migrate/migrate/database/mysql"
+	_ "github.com/golang-migrate/migrate/source/file"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -70,4 +74,44 @@ func (a AccessCtrl) getDNSProd() string {
 
 func (a AccessCtrl) GetDB() *sqlx.DB {
 	return a.ShopSQLDB
+}
+
+func MigrateDB() {
+	a := new(AccessCtrl)
+
+	fmt.Println(("mig"))
+
+	db, err := sql.Open("mysql", a.getDNS()+"?multiStatements=true")
+
+	if err != nil {
+		LogError("Migration Error connecting to database", err)
+		return
+	}
+
+	fmt.Println(("mig"))
+
+	driver, err := mysql.WithInstance(db, &mysql.Config{})
+
+	if err != nil {
+		LogError("Migration Error getting database driver", err)
+		return
+	}
+
+	fmt.Println(("mig"))
+
+	migration, err := migrate.NewWithDatabaseInstance(
+		"file://migrations",
+		"mysql",
+		driver,
+	)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		LogError("Error creating migration instance", err)
+		return
+	}
+
+	fmt.Println(("mig"))
+
+	migration.Steps(Configuration.DB.MigrationStep)
 }

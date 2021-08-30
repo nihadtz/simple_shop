@@ -19,7 +19,8 @@ var (
 	payments   controllers.Payments
 	dashboards controllers.Dashboards
 
-	runas = kingpin.Flag("runas", "Define deployment type and which configuration profile to read (dev, test, prod...)").Short('r').Default("dev").String()
+	runas   = kingpin.Flag("runas", "Define deployment type and which configuration profile to read (dev, test, prod...)").Short('r').Default("dev").String()
+	migrate = kingpin.Flag("migrate", "Migrate database to level defined in configuration").Short('m').Bool()
 )
 
 func init() {
@@ -31,6 +32,11 @@ func main() {
 	services.NewConfigurer(*runas, "conf/conf.yaml")
 	services.NewLogger()
 	services.NewRenderer()
+
+	if *migrate {
+		services.MigrateDB()
+	}
+
 	services.NewAccess(*runas)
 	services.SetRBAC("/conf/rbac.conf", "/conf/rbac.policy")
 

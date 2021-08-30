@@ -1,0 +1,4 @@
+DROP TABLE Payment;
+DROP TABLE Purchase;
+DROP TABLE Product;
+DROP TABLE User;

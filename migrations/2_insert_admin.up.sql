@@ -1,0 +1,1 @@
+INSERT INTO User (name, email, password, type) VALUES ('Nihad', 'nihad.pasalic@gmail.com', 'nihad123456', 'admin');

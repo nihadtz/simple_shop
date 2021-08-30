@@ -1,0 +1,1 @@
+DELETE FROM User WHERE email = 'nihad.pasalic@gmail.com';
