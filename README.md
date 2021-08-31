@@ -2,6 +2,11 @@
 
 This application provides simple shop using JWT for authentication, Stripe for payments, RBAC for access control, and allows database migrations.
 
+# How to run it
+
+    docker-compose up
+
+
 # How it works
 
 Every user is able to visit public dashboard and see the most popular and all products.
