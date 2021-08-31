@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/casbin/casbin"
-	"github.com/dgrijalva/jwt-go"
-	jwtreq "github.com/dgrijalva/jwt-go/request"
+	"github.com/golang-jwt/jwt"
+	jwtreq "github.com/golang-jwt/jwt/request"
 	"github.com/gorilla/context"
 	"github.com/nihadtz/simple_shop/models"
 	"github.com/nihadtz/simple_shop/services"
@@ -21,7 +21,7 @@ type Provider struct {
 }
 
 var (
-	pubkey []byte
+	pubkey = []byte("MyVerySecretCode")
 
 	ErrUserNotFound = errors.New("This User doesn't exists")
 )
