@@ -1,6 +1,6 @@
 # Welcome to SimpleShop!
 
-This application provides simple shop using JWT for authentication, Stripe for payments, RBAC for access control, and allows database migrations.
+This application provides simple shop using JWT for authentication, Stripe for payments, RBAC for access control, and allows database migrations. Read more about it in next few lines.
 
 # How to run it
 
